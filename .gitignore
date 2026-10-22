@@ -1,0 +1,10 @@
+# Реальные файлы окружения с секретами не попадают в репозиторий
+.env
+config/*.env
+!config/example.env
+
+# Служебные файлы Python
+venv/
+.venv/
+__pycache__/
+*.pyc
