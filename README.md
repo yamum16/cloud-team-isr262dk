@@ -71,6 +71,27 @@ curl http://127.0.0.1:5000/services
 `PORT` (по умолчанию 5000) и `APP_TITLE`. Реальные пароли и ключи в
 репозиторий **не добавляются**: см. `config/example.env`.
 
+## Развертывание на виртуальной машине
+
+Ubuntu Server в VirtualBox, сеть NAT с пробросом порта 5000.
+
+```bash
+sudo apt update
+sudo apt install -y git python3 python3-pip python3-venv
+git clone https://github.com/yamum16/cloud-team-isr262dk.git
+cd cloud-team-isr262dk
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+export PORT=5000
+python app.py
+```
+
+Проверка на ВМ: `curl http://127.0.0.1:5000`.
+С хост-компьютера: `http://127.0.0.1:5000` (через проброс порта NAT).
+
+Обновление после изменений в GitHub: `git status`, затем `git pull`.
+
 ## Автор
 
 Жанашева И.М., группа ИСР262дк. Работа выполнена индивидуально.
@@ -81,6 +102,7 @@ curl http://127.0.0.1:5000/services
 |--------------|-------------|
 | № 3 | Issues, ветки, Pull Requests, review — [отчёт](reports/lab3.md) |
 | № 4 | Документация README, прототип приложения — [отчёт](reports/lab4.md) |
+| № 6 | Развертывание из GitHub на виртуальной машине |
 
 Справочные материалы: [модели обслуживания](docs/service-models.md),
 [примеры сервисов](docs/services-examples.md),
