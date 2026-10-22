@@ -30,6 +30,7 @@
 |------|------------|
 | `app.py` | веб-приложение (точка запуска) |
 | `requirements.txt` | зависимости Python |
+| `Dockerfile`, `.dockerignore` | сборка Docker-образа |
 | `app/` | каталог для развития исходного кода |
 | `docs/service-models.md` | описание моделей IaaS / PaaS / SaaS |
 | `docs/services-examples.md` | примеры облачных сервисов |
@@ -40,6 +41,7 @@
 
 - **Git** и **GitHub**: хранение кода, Issues, ветки, Pull Requests
 - **Python 3** и **Flask**: веб-приложение
+- **Docker**: контейнеризация приложения
 - **Markdown**: документация
 
 ## Запуск
@@ -92,6 +94,35 @@ python app.py
 
 Обновление после изменений в GitHub: `git status`, затем `git pull`.
 
+## Запуск в Docker
+
+Нужен установленный Docker Engine.
+
+```bash
+git clone https://github.com/yamum16/cloud-team-isr262dk.git
+cd cloud-team-isr262dk
+sudo docker build -t cloud-catalog:v1 .
+sudo docker run -d --name cloud-app -p 8080:5000 cloud-catalog:v1
+```
+
+| Параметр | Значение |
+|----------|----------|
+| Образ | `cloud-catalog:v1` |
+| Контейнер | `cloud-app` |
+| Порт | `8080` на хосте → `5000` в контейнере |
+
+Проверка: `sudo docker ps`, `sudo docker logs cloud-app`, `curl http://localhost:8080`.
+
+Свой заголовок можно передать переменной окружения, не меняя образ:
+
+```bash
+sudo docker run -d --name cloud-app -p 8080:5000 -e APP_TITLE="Мой каталог" cloud-catalog:v1
+```
+
+Секреты (пароли, токены) в Dockerfile и образ не записываются.
+
+Остановка и запуск: `sudo docker stop cloud-app` / `sudo docker start cloud-app`.
+
 ## Автор
 
 Жанашева И.М., группа ИСР262дк. Работа выполнена индивидуально.
@@ -103,6 +134,7 @@ python app.py
 | № 3 | Issues, ветки, Pull Requests, review — [отчёт](reports/lab3.md) |
 | № 4 | Документация README, прототип приложения — [отчёт](reports/lab4.md) |
 | № 6 | Развертывание из GitHub на виртуальной машине |
+| № 7 | Контейнеризация: Dockerfile, .dockerignore, запуск в Docker |
 
 Справочные материалы: [модели обслуживания](docs/service-models.md),
 [примеры сервисов](docs/services-examples.md),
